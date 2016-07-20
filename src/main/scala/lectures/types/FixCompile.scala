@@ -17,7 +17,7 @@ object FixCompile extends App {
 
         val result = List[Int](1, 2, 3, 4, 5, 6, 7, 8, 9).map {
               mapper
-            }.foldLeft(0) { (acc, v) => acc + v }
+            }.foldLeft(0) { (accumelated, v) => accumelated + v }
 
          print(result)
         }

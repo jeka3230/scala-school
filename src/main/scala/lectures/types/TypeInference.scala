@@ -1,9 +1,7 @@
-package lectures.types
+package types
 
 /**
-  * Не запуская приложения предположите, чему будет равен 'result'
-  * Почему?
-  *
+  * Created by evgeny on 13.07.16.
   */
 object TypeInference extends App {
 
@@ -16,4 +14,3 @@ object TypeInference extends App {
   print(result)
 
 }
-

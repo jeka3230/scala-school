@@ -1,5 +1,8 @@
-package lectures.functions
+package functions
 
+/**
+  * Created by evgeny on 13.07.16.
+  */
 /**
   * Цель упражнения, вычислить 9 - е число Фибоначчи
   * Для этого, раскомментируйте строчку в методе fibs и исправьте ошибку компиляции.
@@ -12,38 +15,15 @@ package lectures.functions
 object Fibonacci extends App {
 
   // Task 2
-  def fibs(num: Int) = {
-    if (num == 1) 1
-    if (num == 2) 1
-    //fibs(num - 1) + fibs(num - 2)
+  def fibs(num: Int):(Int) = {
+    if (num == 1) 1 else
+    if (num == 2) 1 else
+    fibs(num - 1) + fibs(num - 2)
   }
 
   println(fibs(9))
   //println(fibs(1000))
 }
-
-/**
-  * Цель упражнения, используя приемы динамического программирования
-  * реаилзовать более оптимальный алгоритм подсчета чисел фибоначчи
-  * Для этого нужно реализовать функцию fibsImpl.
-  * Сигнатуру функции Вы можете расширять по своему усмотрению,
-  * но реализация должна удовлетварять следующим требованиям
-  * * * * метод fibsImpl - должен быть tail recursive
-  * * * * параметр acc - аккумулятор посчитанных значений
-  *
-  */
-object Fibonacci2 extends App {
-
-  def fibs2(num: Int) =
-    if (num <= 3) Array(1, 1, 2)(num - 1)
-    else fibsImpl(num, Array(1, 1, 2))(num - 1)
-
-  private def fibsImpl(num: Int, acc: Array[Int]): Array[Int] = ???
-
-  println(fibs2(16))
-  //println(fibs(1000))
-}
-
 
 
 

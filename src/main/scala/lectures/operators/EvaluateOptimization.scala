@@ -1,6 +1,6 @@
 package lectures.operators
 
-import lectures.functions.Data
+import lectures.functions.{Computation, CurriedComputation, Data, FunctionalComputation}
 
 /**
   * В задачке из lectures.functions.Computations, мы реализовали
@@ -15,31 +15,46 @@ import lectures.functions.Data
   */
 object EvaluateOptimization extends App with Data {
 
-  val startTimestamp = System.currentTimeMillis()
+  var startTimestamp = System.currentTimeMillis()
 
 
-  // ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 Computation.computation(
-  //    for(??? <- ???) {
-  //    print("elapsed time in Computation.computation" + (System.currentTimeMillis() - startTimestamp))
-  //   }
+//   ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 Computation.computation(
+  for (_ <- 1 to 100) {
+    Computation.computation(filterData, dataArray)
+  }
+  var timeBasic = System.currentTimeMillis() - startTimestamp
+  print("elapsed time in basic computation " + timeBasic + "\n")
+
 
   // ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 CurriedComputation.partiallyAppliedCurriedFunction(
-  //    for(??? <- ???) {
-  //     ???
-  //    print("elapsed time " + (System.currentTimeMillis() - startTimestamp))
-  //   }
+
+  startTimestamp = System.currentTimeMillis()
+
+  for(_ <- 1 to 100) {
+    (CurriedComputation.curriedComputation(filterData)_)(dataArray)
+  }
+  var timeCurried = System.currentTimeMillis() - startTimestamp
+  print("elapsed time in curried computation " + timeCurried + "\n")
 
   // ВЫПОЛНИТЬ В ЦИКЛЕ  ОТ 1 ДО 100 FunctionalComputation.filterApplied
-  //    for(??? <- ???) {
-  //     ???
-  //    print("elapsed time " + (System.currentTimeMillis() - startTimestamp))
-  //   }
 
-  // ВЫВЕСТИ РАЗНИЦУ В ПРОДОЛЖИТЕЛЬНОСТИ ВЫПОЛНЕНИЯ МЕЖДУ КАРРИРОВАННОЙ ВЕРСИЕЙ
-  // И ФУНКЦИОНАЛЬНОЙ
+  startTimestamp = System.currentTimeMillis()
 
-  //  val diff = ???
+  for(_ <- 1 to 100) {
+   FunctionalComputation.functionalComputation(filterData)(dataArray)
+  }
+  var timeFunctional = System.currentTimeMillis() - startTimestamp
+  print("elapsed time functional computation " + timeFunctional + "\n")
 
-  ///  print(s"Difference is about $diff milliseconds")
+//   ВЫВЕСТИ РАЗНИЦУ В ПРОДОЛЖИТЕЛЬНОСТИ ВЫПОЛНЕНИЯ МЕЖДУ КАРРИРОВАННОЙ ВЕРСИЕЙ
+//   И ФУНКЦИОНАЛЬНОЙ
+
+  val diff = timeCurried - timeFunctional
+
+  print(s"Difference is about $diff milliseconds")
 }
+// elapsed time in basic computation 11220
+// elapsed time in curried computation 11060
+// elapsed time functional computation 11048
+// Difference is about 12 milliseconds
 

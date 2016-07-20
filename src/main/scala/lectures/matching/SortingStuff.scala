@@ -5,26 +5,26 @@ package lectures.matching
   *
   * У Вас есть вещи 3-х разных типов
   * * * * Watches - часы
-  * * * * Boots - кросовки
+  * * * * Boots - кроссовки
   * * * * Book - книги
   *
   * Вы хотите привести свои вещи в порядок и оставить только нужные
   * Для этого Вы завели себе коробку с отделениями для каждого типа вещей
   * * * * * StuffBox
   *
-  * В StuffBox вы клатеде вещи таким образом
+  * В StuffBox вы кладёте вещи таким образом
   * * * * * Все часы дороже 1000 в StuffBox.watches
   * * * * * Все кросовки от Converse или Adidas в StuffBox.boots
   * * * * * Все интересные книги в StuffBox.books
   * * * * * Остальное в StuffBox.junk
   *
-  * После того как Вы разложиди вещи, вы пытаетеь найти свой любимый нож,
+  * После того как Вы разложили вещи, вы пытаетесь найти свой любимый нож,
   * который вы могли случайно положить в junk.
   *
-  * После запуска SortingStuff должен напечатаьь ответ на вопрос
+  * После запуска SortingStuff должен напечатать ответ на вопрос
   * Is the knife in a junk? - "
   *
-  * Что бы выполнить задание, раскомментируйте код и следуйте подсказкам
+  * Чтобы выполнить задание, раскомментируйте код и следуйте подсказкам
   *
   */
 
@@ -67,30 +67,31 @@ object SortingStuff extends App {
                       boots: List[Boots] = Nil,
                       junk: List[Stuff] = Nil)
 
-   def sortJunk(stuff: List[Stuff]): StuffBox = ??? ///sort(stuff, StuffBox())
+   def sortJunk(stuff: List[Stuff]): StuffBox = sort(stuff, StuffBox())
   // // Замените знаки вопроса подходящим кодом
   // // Поправьте логику метода
-  //  private def sort(stuff: List[Stuff], stuffBox: StuffBox): StuffBox = ??? {
-  //    case _ => stuffBox
-  //    case ??? =>
-  //      val newBox = putStuffInRightBox(item, stuffBox)
-  //      sort(rest, newBox)
-  //
-  //  }
+    private def sort(stuff: List[Stuff], stuffBox: StuffBox): StuffBox = stuff match {
+      case item :: rest =>
+        val newBox = putStuffInRightBox(item, stuffBox)
+        sort(rest, newBox)
+      case _ => stuffBox
+
+    }
   //  // Метод должен положить вещь в правильную коробку
-  //  private def putStuffInRightBox(item: Stuff, stuffBox: StuffBox) = ??? {
-  //    case ??? => stuffBox.copy(watches = it :: stuffBox.watches)
-  //    case junk@_ => stuffBox.copy(junk = junk :: stuffBox.junk)
-  //    case ??? => stuffBox.copy(boots = it :: stuffBox.boots)
-  //  }
-  //
-  //  def findMyKnife(stuffBox: StuffBox): Boolean = stuffBox match {
-  //    case ??? if junk.contains(Knife) => true
-  //    case _ => false
-  //  }
+    private def putStuffInRightBox(item: Stuff, stuffBox: StuffBox) = item match {
+      case it@Watches(_, _) if it.cost > 1000 => stuffBox.copy(watches = it :: stuffBox.watches)
+      case it@Boots(_, _) if it.brand == "Converse" || it.brand == "Adidas" => stuffBox.copy(boots = it :: stuffBox.boots)
+      case it@Book(_, _) if it.isInteresting => stuffBox.copy(books = it :: stuffBox.books)
+      case junk@_ => stuffBox.copy(junk = junk :: stuffBox.junk)
+  }
+
+    def findMyKnife(stuffBox: StuffBox): Boolean = stuffBox match {
+      case _ if stuffBox.junk.contains(Knife) => true
+      case _ => false
+    }
 
   // //вместо вопросов подставьте композицию функций  sortJunk и findMyKnife
-  // val knifeIsInJunk = (???) (stuff)
+   val knifeIsInJunk = (sortJunk _ andThen findMyKnife ) (stuff)
 
-  //print(s"Is knife in a junk? - $knifeIsInJunk")
+  print(s"Is knife in a junk? - $knifeIsInJunk") // Is knife in a junk? - true
 }

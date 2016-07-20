@@ -40,12 +40,24 @@ object Computation extends App with Data {
   */
 object CurriedComputation extends App with Data {
 
-  def curriedComputation(filterData: String)(dataProducer: Array[String]): Array[String] = ???
+  def curriedComputation(filterData: String)(dataProducer: Array[String]): Array[String] = {
 
-  val partiallyAppliedCurriedFunction = ???
+    //EMULATE HEAVY LOAD
+    Thread.sleep(10)
+    //PRODUCE WORDS ARRAY FROM A STRING
+    val filterArray = filterData.split(" ")
 
-  //val result = partiallyAppliedCurriedFunction(dataArray)
-  //result.foreach(print)
+    //EMULATE HEAVY LOAD
+    Thread.sleep(100)
+    // LEAVE ONLY EQUAL WORDS IN BOTH ARRAYS
+    dataProducer.filter(dataItem => filterArray.contains(dataItem))
+
+  }
+
+  val partiallyAppliedCurriedFunction = curriedComputation(filterData)_
+
+  val result = partiallyAppliedCurriedFunction(dataArray)
+  result.foreach(println)
 }
 
 /**
@@ -53,12 +65,23 @@ object CurriedComputation extends App with Data {
   */
 object FunctionalComputation extends App with Data {
 
-  def functionalComputation(filterData: String): (Array[String]) => Array[String] = ???
+  def functionalComputation(filterData: String): (Array[String]) => Array[String] = {
 
-  val filterApplied = functionalComputation(???)
+    //EMULATE HEAVY LOAD
+    Thread.sleep(10)
+    //PRODUCE WORDS ARRAY FROM A STRING
+    val filterArray = filterData.split(" ")
+    (dataProducer: Array[String]) => {
+      //EMULATE HEAVY LOAD
+      Thread.sleep(100)
+      dataProducer.filter(dataItem => filterArray.contains(dataItem))
+    }
+  }
 
-  val result = filterApplied(???)
-  result.foreach(print)
+  val filterApplied = functionalComputation(filterData)
+
+  val result = filterApplied(dataArray)
+  result.foreach(println)
 }
 
 

@@ -24,7 +24,7 @@ object SQLAPI extends App {
 
   case class Connection(resource: String, opened: Boolean = false) {
 
-    private val result = "SQL has been executed. Congrats!"
+    private val result = "SQL has been executed. Congratulations!"
 
     def open(): Connection = this.copy(opened = true)
 
@@ -32,11 +32,16 @@ object SQLAPI extends App {
 
   }
 
-  private def logParameter[T](prm: T): T  = ???
+  private def logParameter[T](prm: T): T  = {
+    println(prm)
+    prm
+  }
 
   val connection = (resource: String) => Connection(resource)
 
-  def execute(resource: String, sql: String): String = ???
+  def execute(resource: String, sql: String): String = {
+    ((logParameter[String]_ andThen connection andThen logParameter andThen openConnection)(resource) andThen logParameter)(sql)
+  }
 
 
   def openConnection(connection: Connection): (String) => String =
